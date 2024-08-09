@@ -1,11 +1,18 @@
 const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const imageRoutes = require("./route/imageRoutes");
 
 const app = express();
+const port = 5000;
 
-const PORT = 3000;
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-app.get("/api", (req, res) => {
-    res.send("Hello World!");
+app.use("/api", imageRoutes);
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
